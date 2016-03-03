@@ -1,93 +1,82 @@
 package exLuqueBravoAntonio;
 
-import java.util.ArrayList;
-
 import utiles.Menu;
 import utiles.Teclado;
 
 /**
- * Previamente a las instrucciones, recuerda:
+ * Modifica el ejercicio anterior para manejar cuentas con titulares,
+ * reintegros, transferencias...
  * 
- * El código no sólo ha de compilar y funcionar según estas disposiciones, sino
- * que ha de ser entendible y eficiente, sin redundancia y con una finalidad
- * clara. Empaqueta todos los ficheros .java en el paquete
- * exNombreApellido1Apellido2 Recuerda mantener la visibilidadmás adecuada Dale
- * al código un formato legible. Entrega la carpeta completa del código fuente
- * comprimida en un fichero exNombreApellido1Apellido2 Genera la documentación
- * javadoc y entrégala junto con el resto de los documentos. Para ello: Cada
- * clase ha de tener su comentario junto con el nombre del autor correctamente
- * identificado según javadoc Documenta en cada clase al menos un campo un
- * método, con sus argumentos
+ * Un interfaz podría ser este (no implementes la eliminación en ningún
+ * ArrayList)
+ *
+ * Menú principal
  * 
- * Implementa al menos tres clases: TestCuentas, Persona y Cuenta y añádele los
- * campos y métodos que estimes oportunos según estas instrucciones. Se nos pide
- * implementar el comportamiento de una cuenta corriente. Queremos hacer
- * hincapié en el número de cuenta, que ha de ser único. En este caso el número
- * de cuenta se generará mediante un contador común a todas las cuentas. La
- * primera cuenta deberá tener el código de cuenta con valor 1. La cuenta
- * permitirá al menos las siguientes operaciones:
+ * (1) Menú cuentas
  * 
- * Ingreso a la cuenta de una cantidad de dinero. Reintegro de la cuenta de una
- * cantidad de dinero. La cuenta no puede llegar a números rojos. En tal caso,
- * el reintegro no puede llevarse a cabo. Transferencia de una cantidad de
- * dinero desde una cuenta a otro. La cuenta origen de la transferencia no puede
- * llegar a números rojos. En tal caso, la transferencia no puede llevarse a
- * cabo. Mostrar el estado de la cuenta, donde aparezcan todos los
- * atributos(toString())
+ * (2) Menú Personas
  * 
- * Crea una clase TestCuentas donde estará el método main que lleve a cabo las
- * siguientes operaciones:
+ * (3) Salir
  * 
- * Ha de crear dos cuentas con las siguientes características: Primera cuenta:
- * de "Mortadelo", con dni 11223344 y dirección Mikasa. Saldo inicial de la
- * cuenta: 1000 euros Segunda cuenta: de Filemon, con dni 55667788 y dirección
- * Calle del Medio. Saldo inicial: 2000 euros. Una vez creadas las dos cuentas,
- * sobre la cuenta de Mortadelo han de realizarse las siguientes operaciones: Un
- * reintegro de 500 euros Un cambio de domicilio a la nueva dirección 13, Rue
- * del Percebe Una transferencia de la cuenta de Mortadelo a la de Filemón, de
- * una cantidad de 500 euros. Una segunda transferencia de la cuenta de
- * Mortadelo a la de Filemón, de una cantidad de 500 euros Un reintegro de la
- * cuenta de Mortadelo de 7 euros.
+ * 2
+ *
+ * Personas
  * 
- * Como resultado, el programa mostrará los siguientes mensajes: Cuenta: 1,
- * 1000.0, 11223344, Mortadelo, Mikasa. Cuenta: 2, 2000.0, 55667788, Filemon,
- * Calle del Medio.
+ * (1) Crear persona nueva
  * 
- * --Después de reintegro(500) Cuenta: 1, 500.0, 11223344, Mortadelo, Mikasa.
+ * (2) Modificar dirección
  * 
- * --Después de setDireccion("13, Rue del Percebe") 11223344, Mortadelo, 13, Rue
- * del Percebe.
+ * (3) Mostrar persona
  * 
- * --Después de transferencia(500) Cuenta: 1, 0.0, 11223344, Mortadelo, 13, Rue
- * del Percebe. Cuenta: 2, 2500.0, 55667788, Filemon, Calle del Medio. ERROR. No
- * se ha podido realizar la transferencia.
+ * (4) Mostrar personas
  * 
- * --Después de transferencia(500) Cuenta: 1, 0.0, 11223344, Mortadelo, 13, Rue
- * del Percebe. Cuenta: 2, 2500.0, 55667788, Filemon, Calle del Medio. ERROR. No
- * se ha podido realizar el reintegro
+ * (5) Salir
  * 
- * --Después de reintegro(7) Cuenta: 1, 0.0, 11223344, Mortadelo, 13, Rue del
- * Percebe.
+ * 5
+ *
+ * Menú principal
  * 
- * Asegúrate de que:
+ * (1) Menú cuentas
  * 
- * El DNI del titular es válido (expresión regular y algoritmo) En caso de
- * introducir un DNI erróneo o sin letra, se le indicará al usario previamente a
- * la creación del titular. Siempre se le exigirá la letra correcta. Lanza una
- * excepción en el caso en que el dni no sea correcto o el resto de los datos no
- * cumplan un mínimo de formato. (regex)
+ * (2) Menú Personas
+ * 
+ * (3) Salir
+ * 
+ * 1
+ *
+ * Cuentas corrientes
+ * 
+ * (1) Crear cuenta nueva
+ * 
+ * (2) Ingreso
+ * 
+ * (3) Reintegro
+ * 
+ * (4) Transferencia
+ * 
+ * (5) Mostrar cuenta
+ * 
+ * (6) Mostrar cuentas
+ * 
+ * (7) Salir
  * 
  * @author Antonio Luque Bravo
  * @version 1.0
  *
  */
 public class TestCuentas {
+	/**
+	 * Banco.
+	 */
 	private static Banco banco = new Banco();
 
 	public static void main(String[] args) {
 		gestionarBanco();
 	}
 
+	/**
+	 * M&eacute;todo para gestionar el banco.
+	 */
 	private static void gestionarBanco() {
 		int opcion;
 		Menu menuCuentas = new Menu("Banca Online.",
@@ -137,6 +126,9 @@ public class TestCuentas {
 		} while (opcion != 12);
 	}
 
+	/**
+	 * Modifica la direcci&oacute;n del cliente.
+	 */
 	private static void modificarDireccionCliente() {
 		try {
 			banco.modificarDireccion(Teclado.leerCadena("Introduce el DNI del cliente."),
@@ -148,10 +140,16 @@ public class TestCuentas {
 		}
 	}
 
+	/**
+	 * Muestra todos los clientes del banco.
+	 */
 	private static void mostrarTodosClientes() {
 		System.out.println(banco.mostrarClientes());
 	}
 
+	/**
+	 * Muestra la cuenta introduciendo el c&oacute;digo de la misma.
+	 */
 	private static void mostrarCuenta() {
 		try {
 			System.out.println(banco.mostrarCuentasporCodigo(Teclado.leerEntero("Introduce el código de la cuenta.")));
@@ -160,6 +158,9 @@ public class TestCuentas {
 		}
 	}
 
+	/**
+	 * Muestra el cliente introduciendo el DNI del cliente.
+	 */
 	private static void mostrarCliente() {
 		try {
 			System.out.println(banco.mostrarPersonasPorDNI(Teclado.leerCadena("Introduce el DNI del cliente.")));
@@ -171,10 +172,16 @@ public class TestCuentas {
 
 	}
 
+	/**
+	 * Muestra todas las cuentas del banco.
+	 */
 	private static void mostrarTodasCuentas() {
-		System.out.println(banco.mostrarCuentasYClientes());
+		System.out.println(banco.mostrarCuentas());
 	}
 
+	/**
+	 * Transfiere saldo de una cuenta a otra.
+	 */
 	private static void transferenciaCuenta() {
 		mostrarTodasCuentas();
 		try {
@@ -191,6 +198,9 @@ public class TestCuentas {
 		}
 	}
 
+	/**
+	 * Retira dinero de una cuenta.
+	 */
 	private static void reintegroCuenta() {
 		try {
 			mostrarTodasCuentas();
@@ -205,6 +215,9 @@ public class TestCuentas {
 		}
 	}
 
+	/**
+	 * Ingreso de saldo en una cuenta.
+	 */
 	private static void ingresoCuenta() {
 		try {
 			mostrarTodasCuentas();
@@ -219,6 +232,9 @@ public class TestCuentas {
 		}
 	}
 
+	/**
+	 * A&ntilde;ade una cuenta al cliente ya dado de alta.
+	 */
 	private static void annadirCuenta() {
 		try {
 			banco.annadirCuentaCliente(Teclado.leerEntero("Introduce el saldo inicial de la cuenta."),
@@ -234,6 +250,9 @@ public class TestCuentas {
 		}
 	}
 
+	/**
+	 * Elimina tanto el cliente como sus cuentas asociadas al mismo.
+	 */
 	private static void eliminarCliente() {
 		try {
 			banco.eliminarCliente(Teclado.leerCadena("Introduce el DNI del cliente a eliminar."));
@@ -246,6 +265,9 @@ public class TestCuentas {
 		}
 	}
 
+	/**
+	 * A&ntilde;ade un cliente al banco.
+	 */
 	private static void annadirCliente() {
 		try {
 			banco.annadirCliente(Teclado.leerCadena("Introduce el nombre del cliente."),

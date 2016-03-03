@@ -1,8 +1,8 @@
 /**
- * 
+ * Paquete que contiene el banco.
  */
 /**
- * @author Tony
+ * @author Antonio Luque Bravo
  *
  */
 package exLuqueBravoAntonio;

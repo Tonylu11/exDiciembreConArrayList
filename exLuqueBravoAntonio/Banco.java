@@ -19,13 +19,16 @@ public class Banco {
 	public void eliminarCliente(String dni)
 			throws DniInvalidoException, ClienteNoExisteException, TitularInvalidoException {
 		Persona cliente = new Persona(dni);
-		Cuenta cuenta = cuentas.get(cuentas.indexOf(new Cuenta(cliente)));
 		if (!clientes.contains(new Persona(dni))) {
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
 		}
-		if (cuentas.contains(cuenta)) {
-
-			cuentas.remove(cuenta);
+		Iterator<Cuenta> it = cuentas.iterator();
+		while (it.hasNext()) {
+			Cuenta cuenta = it.next();
+			if (cuentas.get(cuentas.indexOf(cuenta)).getTitular().equals(cliente)) {
+				cuentas.remove(cuenta);
+				it = cuentas.iterator();
+			}
 		}
 		clientes.remove(cliente);
 	}

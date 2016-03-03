@@ -120,6 +120,11 @@ public class Cuenta {
 		this.titular = titular;
 
 	}
+	
+
+	public Persona getTitular() {
+		return titular;
+	}
 
 	/**
 	 * Getter de la id de la cuenta.

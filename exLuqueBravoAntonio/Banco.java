@@ -236,9 +236,6 @@ public class Banco {
 	 */
 	public void transferenciaCuenta(int codigoCuentaReintegro, int codigoCuentaIngreso, int cantidad)
 			throws NumerosRojosException, CantidadNegativaException, CuentaNoExisteException {
-		if (cantidad < 0) {
-			throw new CantidadNegativaException("La cantidad no puede ser negativa.");
-		}
 		if (!cuentas.contains(new Cuenta(codigoCuentaReintegro)) || !cuentas.contains(new Cuenta(codigoCuentaIngreso)))
 			throw new CuentaNoExisteException("Esa cuenta no existe.");
 		cuentas.get(cuentas.indexOf(new Cuenta(codigoCuentaReintegro))).reintegro(cantidad);
@@ -261,8 +258,6 @@ public class Banco {
 	 */
 	public void reintegroCuenta(int codigo, int cantidad)
 			throws NumerosRojosException, CuentaNoExisteException, CantidadNegativaException {
-		if (cantidad < 0)
-			throw new CantidadNegativaException("La cantidad no puede ser negativa.");
 		if (!cuentas.contains(new Cuenta(codigo)))
 			throw new CuentaNoExisteException("La cuenta no existe.");
 		cuentas.get(cuentas.indexOf(new Cuenta(codigo))).reintegro(cantidad);
@@ -285,8 +280,6 @@ public class Banco {
 	 */
 	public void ingresoCuenta(int codigo, int cantidad)
 			throws NumerosRojosException, CuentaNoExisteException, CantidadNegativaException {
-		if (cantidad < 0)
-			throw new CantidadNegativaException("La cantidad no puede ser negativa.");
 		if (!cuentas.contains(new Cuenta(codigo)))
 			throw new CuentaNoExisteException("La cuenta no existe.");
 		cuentas.get(cuentas.indexOf(new Cuenta(codigo))).ingreso(cantidad);

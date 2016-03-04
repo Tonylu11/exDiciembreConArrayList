@@ -169,8 +169,13 @@ public class Cuenta {
 	 *            Cantidad ingresar.
 	 * @throws NumerosRojosException
 	 *             Cuando el saldo de la cuenta es negativo.
+	 * @throws CantidadNegativaException
+	 *             Cuando la cantidad es negativa.
 	 */
-	void ingreso(int cantidad) throws NumerosRojosException {
+	void ingreso(int cantidad) throws NumerosRojosException, CantidadNegativaException {
+		if (cantidad < 0)
+			throw new CantidadNegativaException("La cantidad no puede ser negativa.");
+
 		setSaldo(getSaldo() + cantidad);
 	}
 
@@ -181,30 +186,13 @@ public class Cuenta {
 	 *            Cantidad a retirar de la cuenta.
 	 * @throws NumerosRojosException
 	 *             Cuando el saldo de la cuenta es negativo.
+	 * @throws CantidadNegativaException
+	 *             Cuando la cantidad sea negativa.
 	 */
-	void reintegro(int cantidad) throws NumerosRojosException {
+	void reintegro(int cantidad) throws NumerosRojosException, CantidadNegativaException {
+		if (cantidad < 0)
+			throw new CantidadNegativaException("La cantidad no puede ser negativa.");
 		setSaldo(getSaldo() - cantidad);
-	}
-
-	/**
-	 * Transfiere una cantidad de una cuenta a otra.
-	 * 
-	 * @param cuenta
-	 *            Cuenta a donde se ingresar&aacute; el dinero.
-	 * @param cantidad
-	 *            Cantidad a extraer de la cuenta.
-	 * @throws NumerosRojosException
-	 *             Cuando el saldo de la cuenta es negativo.
-	 * @throws TrasferenciaFallidaException
-	 *             Cuando el saldo de la cuenta a la que se le extrae el dinero
-	 *             es 0
-	 */
-	void transferencia(Cuenta cuenta, int cantidad) throws NumerosRojosException, TrasferenciaFallidaException {
-		if (this.getSaldo() == 0) {
-			throw new TrasferenciaFallidaException("La transferencia no se ha podido realizar.");
-		}
-		this.reintegro(cantidad);
-		cuenta.ingreso(cantidad);
 	}
 
 	@Override

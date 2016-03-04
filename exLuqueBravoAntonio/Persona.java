@@ -80,7 +80,7 @@ public class Persona {
 	/**
 	 * Patr&oacute;n para el DNI.
 	 */
-	private static final String DNI_PATTERN = "^[0-9]{8}[A-Z&&[^IOU]]$";
+	private static final String DNI_PATTERN = "^([0-9]{8})([A-Z&&[^IOU]])$";
 	/**
 	 * Patr&oacute;n compilado del DNI.
 	 */
@@ -156,7 +156,7 @@ public class Persona {
 		Matcher matcher = patron.matcher(dni);
 		if (!matcher.matches())
 			throw new DniInvalidoException("Introduce ocho caracteres y una letra (12345678Z).");
-		if (!coincidenLetras(dni))
+		if (!coincidenLetras(matcher.group(1), matcher.group(2)))
 			throw new DniInvalidoException("Introduce una letra correcta (12345678Z).");
 		this.dni = dni;
 	}
@@ -164,16 +164,15 @@ public class Persona {
 	/**
 	 * M&eacute;todo para comprobar la letra del DNI.
 	 * 
-	 * @param dni
+	 * @param numerosDNI
 	 *            dni a comprobar.
 	 * @return Devuelve false si no coincide, true de lo contrario.
 	 */
-	private boolean coincidenLetras(String dni) {
-		int numerosDNI = Integer.parseInt(dni.substring(0, 8));
-		char letra = dni.charAt(8);
-		if (letra != NIF_STRING_ASOCIATION.charAt(numerosDNI % 23)) {
+	private boolean coincidenLetras(String numerosDNI, String letra) {
+		// int numerosDNI = Integer.parseInt(dni.substring(0, 8));
+		// char letra = dni.charAt(8);
+		if (letra.charAt(0) != NIF_STRING_ASOCIATION.charAt(Integer.parseInt(numerosDNI) % 23))
 			return false;
-		}
 		return true;
 	}
 

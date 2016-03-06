@@ -65,7 +65,6 @@ public class CuentaNoExisteException extends Exception {
 
 	public CuentaNoExisteException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 }

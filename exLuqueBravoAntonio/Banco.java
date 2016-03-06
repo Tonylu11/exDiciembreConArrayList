@@ -90,11 +90,11 @@ public class Banco {
 	 */
 	public void annadirCliente(String nombre, String dni, String direccion)
 			throws DniInvalidoException, ClienteYaExisteException {
-		Persona cliente = new Persona(nombre, dni, direccion);
-		if (clientes.contains(cliente)) {
+		if (clientes.contains(new Persona(nombre, dni, direccion))) {
 			throw new ClienteYaExisteException("El cliente ya ha sido dado de alta.");
 		}
-		clientes.add(new Persona(nombre, dni, direccion));
+		Persona cliente = new Persona(nombre, dni, direccion);
+		clientes.add(cliente);
 	}
 
 	/**
@@ -111,10 +111,10 @@ public class Banco {
 	 */
 	public void eliminarCliente(String dni)
 			throws DniInvalidoException, ClienteNoExisteException, TitularInvalidoException {
-		Persona cliente = new Persona(dni);
 		if (!clientes.contains(new Persona(dni))) {
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
 		}
+		Persona cliente = new Persona(dni);
 		Iterator<Cuenta> it = cuentas.iterator();
 		while (it.hasNext()) {
 			Cuenta cuenta = it.next();
@@ -144,10 +144,10 @@ public class Banco {
 	 */
 	public void annadirCuentaCliente(int saldo, String dniTitular)
 			throws DniInvalidoException, ClienteNoExisteException, NumerosRojosException, TitularInvalidoException {
-		Persona cliente = new Persona(dniTitular);
-		if (!clientes.contains(cliente)) {
+		if (!clientes.contains(new Persona(dniTitular))) {
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
 		}
+		Persona cliente = new Persona(dniTitular);
 		cuentas.add(new Cuenta(saldo, clientes.get(clientes.indexOf(cliente))));
 	}
 
@@ -193,9 +193,9 @@ public class Banco {
 	 *             Cuando el cliente no existe en el banco.
 	 */
 	public Persona mostrarPersonasPorDNI(String dni) throws DniInvalidoException, ClienteNoExisteException {
-		Persona cliente = new Persona(dni);
-		if (!clientes.contains(cliente))
+		if (!clientes.contains(new Persona(dni)))
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
+		Persona cliente = new Persona(dni);
 		return clientes.get(clientes.indexOf(cliente));
 	}
 
@@ -209,10 +209,10 @@ public class Banco {
 	 *             Cuando la cuenta no existe en el banco.
 	 */
 	public Cuenta mostrarCuentasporCodigo(int codigo) throws CuentaNoExisteException {
-		Cuenta cuenta = new Cuenta(codigo);
-		if (!cuentas.contains(cuenta))
+		if (!cuentas.contains(new Cuenta(codigo)))
 			throw new CuentaNoExisteException("La cuenta no existe.");
-		return cuentas.get(cuentas.indexOf(new Cuenta(codigo)));
+		Cuenta cuenta = new Cuenta(codigo);
+		return cuentas.get(cuentas.indexOf(cuenta));
 	}
 
 	/**

@@ -142,7 +142,7 @@ public class Banco {
 	 * @throws TitularInvalidoException
 	 *             Cuando el titular es inv&aacute;lido.
 	 */
-	public void annadirCuentaCliente(int saldo, String dniTitular)
+	public void annadirCuentaCliente(double saldo, String dniTitular)
 			throws DniInvalidoException, ClienteNoExisteException, NumerosRojosException, TitularInvalidoException {
 		if (!clientes.contains(new Persona(dniTitular))) {
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
@@ -234,12 +234,13 @@ public class Banco {
 	 * @throws CuentaNoExisteException
 	 *             Cuando la cuenta no existe en el banco.
 	 */
-	public void transferenciaCuenta(int codigoCuentaReintegro, int codigoCuentaIngreso, int cantidad)
+	public void transferenciaCuenta(int codigoCuentaReintegro, int codigoCuentaIngreso, double cantidad)
 			throws NumerosRojosException, CantidadNegativaException, CuentaNoExisteException {
 		if (!cuentas.contains(new Cuenta(codigoCuentaReintegro)) || !cuentas.contains(new Cuenta(codigoCuentaIngreso)))
 			throw new CuentaNoExisteException("Esa cuenta no existe.");
-		cuentas.get(cuentas.indexOf(new Cuenta(codigoCuentaReintegro))).reintegro(cantidad);
-		cuentas.get(cuentas.indexOf(new Cuenta(codigoCuentaIngreso))).ingreso(cantidad);
+		Cuenta cuentaReintegro = cuentas.get(cuentas.indexOf(new Cuenta(codigoCuentaReintegro)));
+		Cuenta cuentaIngreso = cuentas.get(cuentas.indexOf(new Cuenta(codigoCuentaIngreso)));
+		cuentaReintegro.transferencia(cuentaIngreso, cantidad);
 	}
 
 	/**
@@ -256,7 +257,7 @@ public class Banco {
 	 * @throws CantidadNegativaException
 	 *             Cuando la cantidad introducida sea negativa.
 	 */
-	public void reintegroCuenta(int codigo, int cantidad)
+	public void reintegroCuenta(int codigo, double cantidad)
 			throws NumerosRojosException, CuentaNoExisteException, CantidadNegativaException {
 		if (!cuentas.contains(new Cuenta(codigo)))
 			throw new CuentaNoExisteException("La cuenta no existe.");
@@ -278,7 +279,7 @@ public class Banco {
 	 * @throws CantidadNegativaException
 	 *             Cuando la cantidad introducida sea negativa.
 	 */
-	public void ingresoCuenta(int codigo, int cantidad)
+	public void ingresoCuenta(int codigo, double cantidad)
 			throws NumerosRojosException, CuentaNoExisteException, CantidadNegativaException {
 		if (!cuentas.contains(new Cuenta(codigo)))
 			throw new CuentaNoExisteException("La cuenta no existe.");

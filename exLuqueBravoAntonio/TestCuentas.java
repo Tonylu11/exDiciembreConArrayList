@@ -188,7 +188,7 @@ public class TestCuentas {
 			banco.transferenciaCuenta(
 					Teclado.leerEntero("Introduce el código de la cuenta de la que se transferira el dinero."),
 					Teclado.leerEntero("Introduce el código de la cuenta en la que se ingresará la transferencia."),
-					Teclado.leerEntero("Cantidad a transferir:"));
+					Teclado.leerDecimal("Cantidad a transferir:"));
 		} catch (NumerosRojosException e) {
 			System.err.println(e.getMessage());
 		} catch (CantidadNegativaException e) {
@@ -205,7 +205,7 @@ public class TestCuentas {
 		try {
 			mostrarTodasCuentas();
 			banco.reintegroCuenta(Teclado.leerEntero("Introduce el código de la cuenta."),
-					Teclado.leerEntero("Introduce la cantidad a retirar."));
+					Teclado.leerDecimal("Introduce la cantidad a retirar."));
 		} catch (NumerosRojosException e) {
 			System.err.println(e.getMessage());
 		} catch (CuentaNoExisteException e) {
@@ -222,7 +222,7 @@ public class TestCuentas {
 		try {
 			mostrarTodasCuentas();
 			banco.ingresoCuenta(Teclado.leerEntero("Introduce el código de la cuenta."),
-					Teclado.leerEntero("Introduce la cantidad a ingresar."));
+					Teclado.leerDecimal("Introduce la cantidad a ingresar."));
 		} catch (NumerosRojosException e) {
 			System.err.println(e.getMessage());
 		} catch (CuentaNoExisteException e) {
@@ -237,7 +237,7 @@ public class TestCuentas {
 	 */
 	private static void annadirCuenta() {
 		try {
-			banco.annadirCuentaCliente(Teclado.leerEntero("Introduce el saldo inicial de la cuenta."),
+			banco.annadirCuentaCliente(Teclado.leerDecimal("Introduce el saldo inicial de la cuenta."),
 					Teclado.leerCadena("Introduce el DNI del titular existente."));
 		} catch (NumerosRojosException e) {
 			System.err.println(e.getMessage());

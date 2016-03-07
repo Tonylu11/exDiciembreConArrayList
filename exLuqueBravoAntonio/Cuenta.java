@@ -89,7 +89,7 @@ public class Cuenta {
 	 * @throws TitularInvalidoException
 	 *             Cuando el titular es inv&aacute;lido.
 	 */
-	Cuenta(int saldoInicial, Persona titular) throws NumerosRojosException, TitularInvalidoException {
+	Cuenta(double saldoInicial, Persona titular) throws NumerosRojosException, TitularInvalidoException {
 		setSaldo(saldoInicial);
 		setTitular(titular);
 		setId(codigoCuenta++);
@@ -172,7 +172,7 @@ public class Cuenta {
 	 * @throws CantidadNegativaException
 	 *             Cuando la cantidad es negativa.
 	 */
-	void ingreso(int cantidad) throws NumerosRojosException, CantidadNegativaException {
+	void ingreso(double cantidad) throws NumerosRojosException, CantidadNegativaException {
 		if (cantidad < 0)
 			throw new CantidadNegativaException("La cantidad no puede ser negativa.");
 
@@ -189,10 +189,28 @@ public class Cuenta {
 	 * @throws CantidadNegativaException
 	 *             Cuando la cantidad sea negativa.
 	 */
-	void reintegro(int cantidad) throws NumerosRojosException, CantidadNegativaException {
+	void reintegro(double cantidad) throws NumerosRojosException, CantidadNegativaException {
 		if (cantidad < 0)
 			throw new CantidadNegativaException("La cantidad no puede ser negativa.");
 		setSaldo(getSaldo() - cantidad);
+	}
+
+	/**
+	 * M&eacute;todo para transferir una cantidad de dinero de una cuenta a
+	 * otra.
+	 * 
+	 * @param cuentaIngreso
+	 *            Cuenta a la que se le har&aacute; el ingreso.
+	 * @param cantidad
+	 *            Cantidad a transferir.
+	 * @throws NumerosRojosException
+	 *             Cuando el saldo de la cuenta es negativo.
+	 * @throws CantidadNegativaException
+	 *             Cuando la cantidad introducida es negativa.
+	 */
+	void transferencia(Cuenta cuentaIngreso, double cantidad) throws NumerosRojosException, CantidadNegativaException {
+		reintegro(cantidad);
+		cuentaIngreso.ingreso(cantidad);
 	}
 
 	@Override

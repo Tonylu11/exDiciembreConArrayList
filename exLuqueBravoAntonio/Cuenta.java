@@ -90,9 +90,9 @@ public class Cuenta {
 	 *             Cuando el titular es inv&aacute;lido.
 	 */
 	Cuenta(int saldoInicial, Persona titular) throws NumerosRojosException, TitularInvalidoException {
-		setId(codigoCuenta++);
 		setSaldo(saldoInicial);
 		setTitular(titular);
+		setId(codigoCuenta++);
 	}
 
 	/**

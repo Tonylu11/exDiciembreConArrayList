@@ -2,6 +2,7 @@ package exLuqueBravoAntonio;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  * Modifica el ejercicio anterior para manejar cuentas con titulares,
@@ -115,12 +116,11 @@ public class Banco {
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
 		}
 		Persona cliente = new Persona(dni);
-		Iterator<Cuenta> it = cuentas.iterator();
+		ListIterator<Cuenta> it = cuentas.listIterator();
 		while (it.hasNext()) {
 			Cuenta cuenta = it.next();
 			if (cuentas.get(cuentas.indexOf(cuenta)).getTitular().equals(cliente)) {
-				cuentas.remove(cuenta);
-				it = cuentas.iterator();
+				it.remove();
 			}
 		}
 		clientes.remove(cliente);

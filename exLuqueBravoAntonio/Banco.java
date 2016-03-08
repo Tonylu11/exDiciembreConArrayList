@@ -94,8 +94,7 @@ public class Banco {
 		if (clientes.contains(new Persona(nombre, dni, direccion))) {
 			throw new ClienteYaExisteException("El cliente ya ha sido dado de alta.");
 		}
-		Persona cliente = new Persona(nombre, dni, direccion);
-		clientes.add(cliente);
+		clientes.add(new Persona(nombre, dni, direccion));
 	}
 
 	/**
@@ -109,21 +108,35 @@ public class Banco {
 	 *             Cuando el cliente ya esta dado de alta en el banco.
 	 * @throws TitularInvalidoException
 	 *             Cuando el titular noes v&aacute;lido.
+	 * @throws CantidadNegativaException
+	 *             Cuando la cantidad introducida es negativa.
+	 * @throws NumerosRojosException
+	 *             Cuando la cuenta se queda en n&ueacute;meros rojos.
 	 */
-	public void eliminarCliente(String dni)
+	public double eliminarCliente(String dni)
 			throws DniInvalidoException, ClienteNoExisteException, TitularInvalidoException {
 		if (!clientes.contains(new Persona(dni))) {
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
 		}
 		Persona cliente = new Persona(dni);
+		double acumulador = 0;
 		ListIterator<Cuenta> it = cuentas.listIterator();
-		while (it.hasNext()) {
-			Cuenta cuenta = it.next();
-			if (cuentas.get(cuentas.indexOf(cuenta)).getTitular().equals(cliente)) {
-				it.remove();
+		try {
+
+			while (it.hasNext()) {
+				Cuenta cuenta = it.next();
+				if (cuenta.getTitular().equals(cliente)) {
+					acumulador += cuenta.getSaldo();
+					cuenta.reintegro(cuenta.getSaldo());
+					it.remove();
+				}
 			}
+		} catch (NumerosRojosException | CantidadNegativaException e) {
+			// e.printStackTrace(); Nunca llegara porque no voy a sacar mas
+			// dinero que su saldo.
 		}
 		clientes.remove(cliente);
+		return acumulador;
 	}
 
 	/**
@@ -147,8 +160,7 @@ public class Banco {
 		if (!clientes.contains(new Persona(dniTitular))) {
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
 		}
-		Persona cliente = new Persona(dniTitular);
-		cuentas.add(new Cuenta(saldo, clientes.get(clientes.indexOf(cliente))));
+		cuentas.add(new Cuenta(saldo, clientes.get(clientes.indexOf(new Persona(dniTitular)))));
 	}
 
 	/**
@@ -195,8 +207,7 @@ public class Banco {
 	public Persona mostrarPersonasPorDNI(String dni) throws DniInvalidoException, ClienteNoExisteException {
 		if (!clientes.contains(new Persona(dni)))
 			throw new ClienteNoExisteException("El cliente no está dado de alta.");
-		Persona cliente = new Persona(dni);
-		return clientes.get(clientes.indexOf(cliente));
+		return clientes.get(clientes.indexOf(new Persona(dni)));
 	}
 
 	/**
@@ -211,8 +222,7 @@ public class Banco {
 	public Cuenta mostrarCuentasporCodigo(int codigo) throws CuentaNoExisteException {
 		if (!cuentas.contains(new Cuenta(codigo)))
 			throw new CuentaNoExisteException("La cuenta no existe.");
-		Cuenta cuenta = new Cuenta(codigo);
-		return cuentas.get(cuentas.indexOf(cuenta));
+		return cuentas.get(cuentas.indexOf(cuentas.get(cuentas.indexOf(new Cuenta(codigo)))));
 	}
 
 	/**

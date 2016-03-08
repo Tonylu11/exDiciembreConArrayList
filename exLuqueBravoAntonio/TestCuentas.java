@@ -133,11 +133,10 @@ public class TestCuentas {
 		try {
 			banco.modificarDireccion(Teclado.leerCadena("Introduce el DNI del cliente."),
 					Teclado.leerCadena("Introduce la nueva dirección."));
-		} catch (DniInvalidoException e) {
-			System.err.println(e.getMessage());
-		} catch (ClienteNoExisteException e) {
+		} catch (DniInvalidoException | ClienteNoExisteException e) {
 			System.err.println(e.getMessage());
 		}
+
 	}
 
 	/**
@@ -164,9 +163,7 @@ public class TestCuentas {
 	private static void mostrarCliente() {
 		try {
 			System.out.println(banco.mostrarPersonasPorDNI(Teclado.leerCadena("Introduce el DNI del cliente.")));
-		} catch (DniInvalidoException e) {
-			System.err.println(e.getMessage());
-		} catch (ClienteNoExisteException e) {
+		} catch (DniInvalidoException | ClienteNoExisteException e) {
 			System.err.println(e.getMessage());
 		}
 
@@ -189,11 +186,7 @@ public class TestCuentas {
 					Teclado.leerEntero("Introduce el código de la cuenta de la que se transferira el dinero."),
 					Teclado.leerEntero("Introduce el código de la cuenta en la que se ingresará la transferencia."),
 					Teclado.leerDecimal("Cantidad a transferir:"));
-		} catch (NumerosRojosException e) {
-			System.err.println(e.getMessage());
-		} catch (CantidadNegativaException e) {
-			System.err.println(e.getMessage());
-		} catch (CuentaNoExisteException e) {
+		} catch (NumerosRojosException | CantidadNegativaException | CuentaNoExisteException e) {
 			System.err.println(e.getMessage());
 		}
 	}
@@ -206,11 +199,7 @@ public class TestCuentas {
 			mostrarTodasCuentas();
 			banco.reintegroCuenta(Teclado.leerEntero("Introduce el código de la cuenta."),
 					Teclado.leerDecimal("Introduce la cantidad a retirar."));
-		} catch (NumerosRojosException e) {
-			System.err.println(e.getMessage());
-		} catch (CuentaNoExisteException e) {
-			System.err.println(e.getMessage());
-		} catch (CantidadNegativaException e) {
+		} catch (NumerosRojosException | CuentaNoExisteException | CantidadNegativaException e) {
 			System.err.println(e.getMessage());
 		}
 	}
@@ -223,11 +212,7 @@ public class TestCuentas {
 			mostrarTodasCuentas();
 			banco.ingresoCuenta(Teclado.leerEntero("Introduce el código de la cuenta."),
 					Teclado.leerDecimal("Introduce la cantidad a ingresar."));
-		} catch (NumerosRojosException e) {
-			System.err.println(e.getMessage());
-		} catch (CuentaNoExisteException e) {
-			System.err.println(e.getMessage());
-		} catch (CantidadNegativaException e) {
+		} catch (NumerosRojosException | CuentaNoExisteException | CantidadNegativaException e) {
 			System.err.println(e.getMessage());
 		}
 	}
@@ -239,28 +224,20 @@ public class TestCuentas {
 		try {
 			banco.annadirCuentaCliente(Teclado.leerDecimal("Introduce el saldo inicial de la cuenta."),
 					Teclado.leerCadena("Introduce el DNI del titular existente."));
-		} catch (NumerosRojosException e) {
-			System.err.println(e.getMessage());
-		} catch (TitularInvalidoException e) {
-			System.err.println(e.getMessage());
-		} catch (DniInvalidoException e) {
-			System.err.println(e.getMessage());
-		} catch (ClienteNoExisteException e) {
+		} catch (NumerosRojosException | TitularInvalidoException | DniInvalidoException | ClienteNoExisteException e) {
 			System.err.println(e.getMessage());
 		}
 	}
 
 	/**
 	 * Elimina tanto el cliente como sus cuentas asociadas al mismo.
+	 * 
 	 */
 	private static void eliminarCliente() {
 		try {
-			banco.eliminarCliente(Teclado.leerCadena("Introduce el DNI del cliente a eliminar."));
-		} catch (DniInvalidoException e) {
-			System.err.println(e.getMessage());
-		} catch (ClienteNoExisteException e) {
-			System.err.println(e.getMessage());
-		} catch (TitularInvalidoException e) {
+			System.out.println("Aqui tienes tu dinero.."
+					+ banco.eliminarCliente(Teclado.leerCadena("Introduce el DNI del cliente a eliminar.")));
+		} catch (DniInvalidoException | ClienteNoExisteException | TitularInvalidoException e) {
 			System.err.println(e.getMessage());
 		}
 	}
@@ -273,9 +250,7 @@ public class TestCuentas {
 			banco.annadirCliente(Teclado.leerCadena("Introduce el nombre del cliente."),
 					Teclado.leerCadena("Introduce un DNI válido."),
 					Teclado.leerCadena("Introduce la dirección del cliente."));
-		} catch (DniInvalidoException e) {
-			System.err.println(e.getMessage());
-		} catch (ClienteYaExisteException e) {
+		} catch (DniInvalidoException | ClienteYaExisteException e) {
 			System.err.println(e.getMessage());
 		}
 	}

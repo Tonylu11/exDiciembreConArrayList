@@ -207,8 +207,14 @@ public class Cuenta {
 	 *             Cuando el saldo de la cuenta es negativo.
 	 * @throws CantidadNegativaException
 	 *             Cuando la cantidad introducida es negativa.
+	 * @throws CuentaNoExisteException
+	 *             Cuando la cuenta no existe.
 	 */
-	void transferencia(Cuenta cuentaIngreso, double cantidad) throws NumerosRojosException, CantidadNegativaException {
+	void transferencia(Cuenta cuentaIngreso, double cantidad)
+			throws NumerosRojosException, CantidadNegativaException, CuentaNoExisteException {
+		if (cuentaIngreso == null) {
+			throw new CuentaNoExisteException("La cuenta destino no existe.");
+		}
 		reintegro(cantidad);
 		cuentaIngreso.ingreso(cantidad);
 	}
